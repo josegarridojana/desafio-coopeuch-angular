@@ -1,0 +1,77 @@
+@if (viewMode){
+  @if (currentTarea.id){
+  <h4>Tarea</h4>
+  <div>
+    <label><strong>Nombre:</strong></label> {{ currentTarea.name }}
+  </div>
+  <div>
+    <label><strong>Descripcion:</strong></label>
+    {{ currentTarea.descripcion }}
+  </div>
+  <div>
+    <label><strong>Estado:</strong></label>
+    {{ currentTarea.active ? "Activo" : "No Activo" }}
+  </div>
+
+  <a class="badge badge-warning" routerLink="/tareas/{{ currentTarea.id }}">
+    Editar
+  </a>
+  } @else {<p>Por favor haga clic en un Tarea...</p>}
+} @else {
+  @if (currentTarea.id) {
+  <div class="edit-form">
+    <h4>Tarea</h4>
+    <form>
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          [(ngModel)]="currentTarea.name"
+          name="name"
+        />
+      </div>
+	  
+	   <div class="form-group">
+        <label for="email">Descripcion</label>
+        <input
+          type="text"
+          class="form-control"
+          id="descripcion"
+          [(ngModel)]="currentTarea.descripcion"
+          name="descripcion"
+        />
+      </div>
+
+      <div class="form-group">
+        <label><strong>Estado:</strong></label>
+        {{ currentTarea.active ? "Activo" : "No activo" }}
+      </div>
+    </form>
+
+    @if (currentTarea.active) {
+    <button class="badge badge-primary mr-2"
+      (click)="updatePublished(false)" >
+      No Activar
+    </button>
+    } @else {
+    <button class="badge badge-primary mr-2" (click)="updatePublished(true)">
+      Activar
+    </button>
+    }
+
+    <button class="badge badge-danger mr-2" (click)="deleteTarea()">
+      Eliminar
+    </button>
+
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateTarea()">
+      Actualizar
+    </button>
+    <p>{{ message }}</p>
+  </div>
+  } @else {<p>No se puede acceder a esta Tarea...</p>}
+}
